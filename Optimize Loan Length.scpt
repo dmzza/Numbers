@@ -1,4 +1,4 @@
-JsOsaDAS1.001.00bplist00ÑVscript_v
+JsOsaDAS1.001.00bplist00ÑVscript_u
 Numbers = Application('Numbers');
 document = Numbers.documents()[0]
 sheet = document.activeSheet()
@@ -33,9 +33,9 @@ function setValues(cells, values, oldValues) {
 
 
 var firstRow = 2
-var footerRow = 9
+var footerRow = 8
 var totalAvailableRow = 1
-var numberOfLoans = 7
+var numberOfLoans = 6
 var constraintsCol = 2
 var loanPrincipalsCol = 2
 var interestRateCol = 3
@@ -63,9 +63,9 @@ var lowestPossibleTotal = totalPaidRange[0].value();
 var currentLoanLengths = getValues(loanLengthsRange);
 var optimalPermutation = currentLoanLengths.slice();
 
-Progress.totalUnitCount = totalSearchSpace / 30000
+Progress.totalUnitCount = totalSearchSpace / 1000
 Progress.description = "Searching for more optimal loan lengths"
-for(var j = 0; j <= totalSearchSpace / 30000; j++) {
+for(var j = 0; j <= totalSearchSpace / 1000; j++) {
   Progress.completedUnitCount = j
   // oldLoanLengths = currentLoanLengths.slice();
   currentLoanLengths = nextPermutation(currentLoanLengths, minimumLengths, maximumLengths);
@@ -96,7 +96,7 @@ function nextPermutation(currentPermutation, minimumValues, maximumValues) {
     if(next[dimension] == minimumValues[dimension]) {
       next[dimension] = maximumValues[dimension];
     } else {
-      var jumpDown = Math.ceil(currentPermutation[dimension] / 8.0)
+      var jumpDown = Math.ceil(currentPermutation[dimension] / 11.0)
       next[dimension] = Math.max(currentPermutation[dimension] - jumpDown, minimumValues[dimension]);
       break;
     }
@@ -259,4 +259,4 @@ function PMT(rate, periods, present, future = 0, type = 0) {
 
 
 
-                              Œjscr  úÞÞ­
+                              ‹ jscr  úÞÞ­
