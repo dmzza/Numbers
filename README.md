@@ -26,3 +26,13 @@ The next time you need to access a script, just click the Script menu icon in th
 6. Any scripts copied inside here, will appear in the Script menu drop down when Numbers is running.
 
 [Keyboard shorcuts](https://support.apple.com/guide/script-editor/keyboard-shortcuts-scrptedshtcut/mac)
+
+## How to create an Automator Action from the Format script
+1. Open Automator
+2. New Document
+3. Quick Action
+4. Workflow receives current `files or folders`
+5. Drag in a Run Javascript action from the Library of actions
+6. Copy the entire run function from the Format script in this repository to the Run Javascript action
+7. Change any filepaths to the appropriate folder in your own home folder
+8. <kbd>⌘S</kbd> `Format Schwab CSV for YNAB`
