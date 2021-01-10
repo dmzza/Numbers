@@ -1,4 +1,4 @@
-JsOsaDAS1.001.00bplist00ÑVscript_ ú
+JsOsaDAS1.001.00bplist00ï¿½Vscript_ ï¿½
 Numbers = Application('Numbers');
 document = Numbers.documents()[0]
 sheet = document.activeSheet()
@@ -31,6 +31,17 @@ function setValues(cells, values, oldValues) {
 	}
 }
 
+function parseNumbers(values) {
+	var arr = new Array(values.length)
+	for(var i = 0; i < values.length; i++) {
+		arr[i] = parseNumber(values[i])
+		if(arr[i] instanceof Error) {
+			throw arr[i]
+		}
+	}
+	return arr
+}
+
 
 var firstRow = 2
 var footerRow = 8
@@ -45,8 +56,8 @@ var monthlyPaymentCol = 6
 var minimumLengthCol = 9
 var maximumLengthCol = 12
 var searchSpaceCol = 13
-var loanPrincipals = getValues(getCells(loanCellRange, firstRow, loanPrincipalsCol, numberOfLoans));
-var interestRates = getValues(getCells(loanCellRange, firstRow, interestRateCol, numberOfLoans));
+var loanPrincipals = parseNumbers(getValues(getCells(loanCellRange, firstRow, loanPrincipalsCol, numberOfLoans)));
+var interestRates = parseNumbers(getValues(getCells(loanCellRange, firstRow, interestRateCol, numberOfLoans)));
 var loanLengthsRange = getCells(loanCellRange, firstRow, lengthCol, numberOfLoans);
 var totalPaidRange = getCells(loanCellRange, footerRow, totalPaidCol);
 var lowestPossibleRange = getCells(loanCellRange, footerRow + 1, totalPaidCol);
@@ -109,7 +120,7 @@ function nextPermutation(currentPermutation, minimumValues, maximumValues) {
 function totalMonthlyPayment(loanPrincipals, interestRates, loanLengths) {
 	var monthlyPayments = new Array(loanPrincipals.length)
 	for(var i = 0; i < loanPrincipals.length; i++) {
-		monthlyPayments[i] = -1 * PMT(interestRates[i] / 12, loanLengths[i], loanPrincipals[i])
+		monthlyPayments[i] = -1 * typeSafePMT(interestRates[i] / 12, loanLengths[i], loanPrincipals[i], 0, 0)
 	}
 	return monthlyPayments.reduce(function(total, current) { return total + current })
 }
@@ -119,7 +130,7 @@ function totalPaid(loanPrincipals, interestRates, loanLengths) {
 	startingPeriod = 1
 	dueAtEndOfPeriod = 0
 	for(var i = 0; i < loanPrincipals.length; i++) {
-		totalPaids[i] = -1 * CUMIPMT(interestRates[i] / 12, loanLengths[i], loanPrincipals[i], startingPeriod, loanLengths[i], dueAtEndOfPeriod) + loanPrincipals[i]
+		totalPaids[i] = -1 * typeSafeCUMIPMT(interestRates[i] / 12, loanLengths[i], loanPrincipals[i], startingPeriod, loanLengths[i], dueAtEndOfPeriod) + loanPrincipals[i]
 	}
 	return totalPaids.reduce(function(total, current) { return total + current })
 }
@@ -167,7 +178,10 @@ function CUMIPMT(rate, periods, value, start, end, type) {
   if (anyIsError(rate, periods, value)) {
     return error.value;
   }
+  return typeSafeCUMIPMT(rate, periods, value, start, end, type);
+};
 
+function typeSafeCUMIPMT(rate, periods, value, start, end, type) {
   if (rate <= 0 || periods <= 0 || value <= 0) {
     return error.num;
   }
@@ -269,4 +283,4 @@ function typeSafePMT(rate, periods, present, future, type) {
 
 
 
-                              !jscr  úÞÞ­
+                              !jscr  ï¿½ï¿½Þ­
