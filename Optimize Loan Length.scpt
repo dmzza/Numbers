@@ -72,30 +72,31 @@ var totalAvailable = getCells(constraintCellRange, totalAvailableRow, constraint
 
 var lowestPossibleTotal = totalPaidRange[0].value();
 var currentLoanLengths = getValues(loanLengthsRange);
+var oldLoanLengths = currentLoanLengths.slice();
 var optimalPermutation = currentLoanLengths.slice();
 
 Progress.totalUnitCount = totalSearchSpace / 1000
 Progress.description = "Searching for more optimal loan lengths"
 for(var j = 0; j <= totalSearchSpace / 1000; j++) {
-  if(j%10000 == 0) {
-    Progress.completedUnitCount = j
-  }
-  // oldLoanLengths = currentLoanLengths.slice();
   currentLoanLengths = nextPermutation(currentLoanLengths, minimumLengths, maximumLengths);
-  // setValues(loanLengthsRange, currentLoanLengths, oldLoanLengths);
+  if(j%100000 == 0) {
+    Progress.completedUnitCount = j
+	setValues(loanLengthsRange, currentLoanLengths, oldLoanLengths);
+	oldLoanLengths = currentLoanLengths.slice();
+  }
   totalPaidAmount = totalPaid(loanPrincipals, interestRates, currentLoanLengths)
   totalMonthlyPaymentAmount = totalMonthlyPayment(loanPrincipals, interestRates, currentLoanLengths)
   if(totalPaidAmount < lowestPossibleTotal && totalMonthlyPaymentAmount <= totalAvailable) {
-  	oldLoanLengths = optimalPermutation.slice();
     lowestPossibleTotal = totalPaidAmount
     optimalPermutation = currentLoanLengths.slice();
 	setValues(loanLengthsRange, optimalPermutation, oldLoanLengths);
+	oldLoanLengths = optimalPermutation.slice();
     lowestPossibleRange[0].value = lowestPossibleTotal;
     optimalMonthlyPaymentRange[0].value = totalMonthlyPaymentAmount;
   }
 }
 
-// setValues(loanLengthsRange, optimalPermutation, currentLoanLengths);
+setValues(loanLengthsRange, optimalPermutation, currentLoanLengths);
 
 function quit() {
 	// setValues(loanLengthsRange, optimalPermutation, currentLoanLengths);
