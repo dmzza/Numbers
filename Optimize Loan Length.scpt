@@ -1,4 +1,4 @@
-JsOsaDAS1.001.00bplist00ï¿½Vscript_u
+JsOsaDAS1.001.00bplist00ÑVscript_ ú
 Numbers = Application('Numbers');
 document = Numbers.documents()[0]
 sheet = document.activeSheet()
@@ -66,7 +66,9 @@ var optimalPermutation = currentLoanLengths.slice();
 Progress.totalUnitCount = totalSearchSpace / 1000
 Progress.description = "Searching for more optimal loan lengths"
 for(var j = 0; j <= totalSearchSpace / 1000; j++) {
-  Progress.completedUnitCount = j
+  if(j%10000 == 0) {
+    Progress.completedUnitCount = j
+  }
   // oldLoanLengths = currentLoanLengths.slice();
   currentLoanLengths = nextPermutation(currentLoanLengths, minimumLengths, maximumLengths);
   // setValues(loanLengthsRange, currentLoanLengths, oldLoanLengths);
@@ -178,7 +180,7 @@ function CUMIPMT(rate, periods, value, start, end, type) {
     return error.num;
   }
 
-  var payment = PMT(rate, periods, value, 0, type);
+  var payment = typeSafePMT(rate, periods, value, 0, type);
   var interest = 0;
 
   if (start === 1) {
@@ -190,9 +192,9 @@ function CUMIPMT(rate, periods, value, start, end, type) {
 
   for (var i = start; i <= end; i++) {
     if (type === 1) {
-      interest += FV(rate, i - 2, payment, value, 1) - payment;
+      interest += typeSafeFV(rate, i - 2, payment, value, 1) - payment;
     } else {
-      interest += FV(rate, i - 1, payment, value, 0);
+      interest += typeSafeFV(rate, i - 1, payment, value, 0);
     }
   }
   interest *= rate;
@@ -214,7 +216,11 @@ function FV(rate, periods, payment, value, type) {
   if (anyIsError(rate, periods, payment, value, type)) {
     return error.value;
   }
+  return typeSafeFV(rate, period, payment, value, type)
+};
 
+// each parameter must be a non-optional number
+function typeSafeFV(rate, periods, payment, value, type) {
   // Return future value
   var result;
   if (rate === 0) {
@@ -241,7 +247,11 @@ function PMT(rate, periods, present, future = 0, type = 0) {
   if (anyIsError(rate, periods, present, future, type)) {
     return error.value;
   }
+  return typeSafePMT(rate, periods, present, future, type);
+};
 
+// each parameter must be a non-optional number
+function typeSafePMT(rate, periods, present, future, type) {
   // Return payment
   var result;
   if (rate === 0) {
@@ -259,4 +269,4 @@ function PMT(rate, periods, present, future = 0, type = 0) {
 
 
 
-                              ï¿½ jscr  ï¿½ï¿½Þ­
+                              !jscr  úÞÞ­
