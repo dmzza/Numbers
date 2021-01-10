@@ -110,7 +110,7 @@ function nextPermutation(currentPermutation, minimumValues, maximumValues) {
     if(next[dimension] == minimumValues[dimension]) {
       next[dimension] = maximumValues[dimension];
     } else {
-      var jumpDown = Math.ceil(currentPermutation[dimension] / 13.0)
+      var jumpDown = Math.ceil(Math.pow(currentPermutation[dimension] / 16.0, 2))
       next[dimension] = Math.max(currentPermutation[dimension] - jumpDown, minimumValues[dimension]);
       break;
     }
