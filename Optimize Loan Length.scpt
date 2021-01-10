@@ -1,4 +1,4 @@
-JsOsaDAS1.001.00bplist00ÑVscript_u
+JsOsaDAS1.001.00bplist00ï¿½Vscript_u
 Numbers = Application('Numbers');
 document = Numbers.documents()[0]
 sheet = document.activeSheet()
@@ -96,7 +96,7 @@ function nextPermutation(currentPermutation, minimumValues, maximumValues) {
     if(next[dimension] == minimumValues[dimension]) {
       next[dimension] = maximumValues[dimension];
     } else {
-      var jumpDown = Math.ceil(currentPermutation[dimension] / 11.0)
+      var jumpDown = Math.ceil(currentPermutation[dimension] / 13.0)
       next[dimension] = Math.max(currentPermutation[dimension] - jumpDown, minimumValues[dimension]);
       break;
     }
@@ -259,4 +259,4 @@ function PMT(rate, periods, present, future = 0, type = 0) {
 
 
 
-                              ‹ jscr  úÞÞ­
+                              ï¿½ jscr  ï¿½ï¿½Þ­
