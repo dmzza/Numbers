@@ -1,4 +1,4 @@
-JsOsaDAS1.001.00bplist00ï¿½Vscript_ ï¿½
+JsOsaDAS1.001.00bplist00ÑVscript_"à
 Numbers = Application('Numbers');
 document = Numbers.documents()[0]
 sheet = document.activeSheet()
@@ -75,9 +75,9 @@ var currentLoanLengths = getValues(loanLengthsRange);
 var oldLoanLengths = currentLoanLengths.slice();
 var optimalPermutation = currentLoanLengths.slice();
 
-Progress.totalUnitCount = totalSearchSpace / 1000
+Progress.totalUnitCount = totalSearchSpace / 62 // needs to be ~4x larger search space
 Progress.description = "Searching for more optimal loan lengths"
-for(var j = 0; j <= totalSearchSpace / 1000; j++) {
+for(var j = 0; j <= totalSearchSpace / 500; j++) {
   currentLoanLengths = nextPermutation(currentLoanLengths, minimumLengths, maximumLengths);
   if(j%100000 == 0) {
     Progress.completedUnitCount = j
@@ -284,4 +284,4 @@ function typeSafePMT(rate, periods, present, future, type) {
 
 
 
-                              !jscr  ï¿½ï¿½Þ­
+                              "öjscr  úÞÞ­
